@@ -37,6 +37,7 @@ app.post("/book", (req, res) => {
     let author = req.body.author
     const b = new Book(name, author)
     library.addBook(b)
+    res.status(201)
     res.end(Messages.Response(true, "Added book to library", {
         Id: b.id
     }))
