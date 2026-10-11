@@ -6,11 +6,11 @@ export class MemoryLibrary extends Library{
         this.books = []
     }
 
-    getBooks(){
+    async getBooks(){
         return this.books
     }
 
-    getBook(id){
+    async getBook(id){
         let b
         for(let i = 0; i < this.books.length; i++){
             b = this.books[i]
@@ -19,14 +19,14 @@ export class MemoryLibrary extends Library{
         return undefined
     }
 
-    addBook(book){
+    async addBook(book){
         // book already exists
         if(this.getBook(book.id) !== undefined) return false
         this.books.push(book.toJson())
         return true
     }
     
-    updateBook(book){
+    async updateBook(book){
         for(let i = 0; i < this.books.length; i++){
             let compareBook = this.books[i]
             if(compareBook.Id === book.id){
@@ -38,7 +38,11 @@ export class MemoryLibrary extends Library{
         return false
     }
 
-    deleteBook(id){
+    async deleteBook(id){
         this.books = this.books.filter(book => book.Id !== id)
+    }
+
+    async destroy(){
+        // not needed here
     }
 }

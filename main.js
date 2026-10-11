@@ -1,13 +1,18 @@
 import { Book } from "./book.js"
 import * as Messages from "./message.js"
-import { MemoryLibrary } from "./libraries/memory.js"
+import { MongoLibrary } from "./libraries/mongo.js"
 
 import express from "express"
 import bodyParser from "body-parser"
 import cors from "cors"
+import path from "path"
 import http from "http"
+import dotenv from "dotenv"
 
-const library = new MemoryLibrary()
+// read .env file
+dotenv.config()
+
+const library = new MongoLibrary(process.env.MONGODB_URI)
 
 const app = express()
 // url parameters
@@ -16,14 +21,16 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 // https://media.tigers.gay/image/iiDD
 app.use(cors())
+// web directory
+app.use(express.static(path.join(import.meta.dirname, "www")))
 
-app.get("/books", (req, res) => {
-    res.end(Messages.Response(true, "Got library", library.getBooks()))
+app.get("/books", async (req, res) => {
+    res.end(Messages.Response(true, "Got library", await library.getBooks()))
 })
 
-app.get("/book/:id", (req, res) => {
+app.get("/book/:id", async (req, res) => {
     let id = req.params.id
-    let book = library.getBook(id)
+    let book = await library.getBook(id)
     if(book === undefined){
         res.status(404)
         res.end(Messages.Response(false, "Book does not exist"))
@@ -32,23 +39,23 @@ app.get("/book/:id", (req, res) => {
     res.end(Messages.Response(true, "Got book from library", book))
 })
 
-app.post("/book", (req, res) => {
+app.post("/book", async (req, res) => {
     let name = req.body.name
     let author = req.body.author
     const b = new Book(name, author)
-    library.addBook(b)
+    await library.addBook(b)
     res.status(201)
     res.end(Messages.Response(true, "Added book to library", {
         Id: b.id
     }))
 })
 
-app.put("/book/:id", (req, res) => {
+app.put("/book/:id", async (req, res) => {
     let id = req.params.id
     let name = req.body.name
     let author = req.body.author
     const b = new Book(name, author, id)
-    const r = library.updateBook(b)
+    const r = await library.updateBook(b)
     if(r){
         res.end(Messages.Response(true, "Updated book in library"))
         return
@@ -57,9 +64,9 @@ app.put("/book/:id", (req, res) => {
     res.end(Messages.Response(false, "Book does not exist"))
 })
 
-app.delete("/book/:id", (req, res) => {
+app.delete("/book/:id", async (req, res) => {
     let id = req.params.id
-    library.deleteBook(id)
+    await library.deleteBook(id)
     res.end(Messages.Response(true, "If the book exists in the library, it was removed"))
 })
 

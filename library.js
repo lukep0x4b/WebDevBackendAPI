@@ -1,21 +1,25 @@
 export class Library{
-    getBooks(){
+    async getBooks(){
         throw new Error("Implement getBooks")
     }
 
-    getBook(id){
+    async getBook(id){
         throw new Error("Implement getBook")
     }
 
-    addBook(book){
+    async addBook(book){
         throw new Error("Implement addBook")
     }
 
-    updateBook(book){
+    async updateBook(book){
         throw new Error("Implement updateBook")
     }
 
-    deleteBook(id){
+    async deleteBook(id){
         throw new Error("Implement deleteBook")
+    }
+
+    async destroy(){
+        // optional destroy function for libraries that need it
     }
 }
