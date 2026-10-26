@@ -1,3 +1,14 @@
+body {
+  background-color: #00101e;
+  color: white;
+}
+
+main{
+  max-width: 80%;
+  margin: 0 auto;
+  text-align: left;
+}
+
 table {
   font-family: arial, sans-serif;
   border-collapse: collapse;
@@ -11,5 +22,34 @@ td, th {
 }
 
 tr:nth-child(even) {
-  background-color: #dddddd;
+  background-color: #001b33;
+}
+
+.button-success,
+.button-error,
+.button-warning,
+.button-secondary {
+    color: white !important;
+    border-radius: 4px !important;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2) !important;
+}
+
+.button-success {
+    background: rgb(21, 135, 48) !important;
+    /* this is a green */
+}
+
+.button-error {
+    background: rgb(202, 60, 60) !important;
+    /* this is a maroon */
+}
+
+.button-warning {
+    background: rgb(180, 94, 16) !important;
+    /* this is an orange */
+}
+
+.button-secondary {
+    background: rgb(28, 126, 157) !important;
+    /* this is a blue */
 }

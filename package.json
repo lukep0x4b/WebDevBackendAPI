@@ -2,8 +2,10 @@
   "dependencies": {
     "body-parser": "^2.3.0",
     "cors": "^2.8.6",
+    "dotenv": "^18.0.7",
     "express": "^5.2.1",
-    "http": "^0.0.1-security",
+    "mongodb": "^7.7.0",
+    "path": "^0.12.7",
     "uuid": "^14.0.2"
   }
 }

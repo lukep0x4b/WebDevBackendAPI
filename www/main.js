@@ -12,6 +12,7 @@ function createBookEntry(book){
     const thActions = document.createElement("th")
     const updateButton = document.createElement("button")
     updateButton.textContent = "Update"
+    updateButton.className = "button-secondary pure-button"
     updateButton.addEventListener("click", async () => {
         const name = prompt("Book name:", book.Name)
         if (name === null) return
@@ -37,6 +38,7 @@ function createBookEntry(book){
     thActions.appendChild(updateButton)
     const deleteButton = document.createElement("button")
     deleteButton.textContent = "Delete"
+    deleteButton.className = "button-error pure-button"
     deleteButton.addEventListener("click", async () => {
         if (!confirm(`Delete "${book.Name}" by ${book.Author}?`)) return
         const res = await fetch(`/book/${book.Id}`, { method: "DELETE" })

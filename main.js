@@ -42,6 +42,11 @@ app.get("/book/:id", async (req, res) => {
 app.post("/book", async (req, res) => {
     let name = req.body.name
     let author = req.body.author
+    if (!name || !author){
+        res.status(400)
+        res.end(Messages.Response(false, "Name and Author are required"))
+        return
+    }
     const b = new Book(name, author)
     await library.addBook(b)
     res.status(201)
@@ -54,6 +59,11 @@ app.put("/book/:id", async (req, res) => {
     let id = req.params.id
     let name = req.body.name
     let author = req.body.author
+    if (!id || !name || !author){
+        res.status(400)
+        res.end(Messages.Response(false, "Id, Name, and Author are required"))
+        return
+    }
     const b = new Book(name, author, id)
     const r = await library.updateBook(b)
     if(r){
